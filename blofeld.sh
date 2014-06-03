@@ -1,7 +1,6 @@
 #!/bin/bash
 
 readonly PROGNAME=$(basename $0)
-readonly ARGS="$@"
 AWS=aws
 
 s3() {
@@ -33,12 +32,12 @@ s3_setup_website() {
 
 deploy_short_expiry() {
 	local bucket="$1"; shift
-	local files=( "$@" )
+	local files=$@
 	local f
 
-	echo "Syncing short-expiry files ${files[@]} to $bucket"
+	echo "Syncing short-expiry files $files to $bucket"
 
-	for f in "${files[@]}"; do
+	for f in $files; do
 		s3 cp \
 			"$f" \
 			"s3://$bucket/${f#$FOLDER/}" \
@@ -48,12 +47,12 @@ deploy_short_expiry() {
 
 deploy_gzip() {
 	local bucket="$1"; shift
-	local files=( "$@" )
+	local files=$@
 	local f
 
-	echo "Syncing gzipped files ${files[@]} to $bucket"
+	echo "Syncing gzipped files $files to $bucket"
 
-	for f in "${files[@]}"; do
+	for f in $files; do
 		s3 cp \
 			"$f" \
 			"s3://$bucket/${f#$FOLDER/}" \
@@ -93,12 +92,11 @@ cmdline() {
 		\?) echo "Unknown option $OPTARG" ; usage ; exit 1 ;;
 		\:) echo "$OPTARG requires an argument" ; exit 1 ;;
 	esac; done
-
-	return 0
 }
 
 main() {
-	cmdline $ARGS
+	cmdline "$@"
+
 	[[ -z $TARGET_BUCKET || -z $FOLDER ]] && { usage ; exit 1 ; }
 
 	s3_create_bucket $TARGET_BUCKET
@@ -108,5 +106,5 @@ main() {
 	[[ -z $SHORT_EXPIRY ]] || deploy_short_expiry $TARGET_BUCKET $SHORT_EXPIRY
 }
 
-main
+main "$@"
 
