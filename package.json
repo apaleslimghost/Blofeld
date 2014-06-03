@@ -1,0 +1,26 @@
+{
+  "name": "blofeld",
+  "version": "0.0.0",
+  "description": "Setup and sync an S3 bucket for website serving",
+  "main": "blofeld.sh",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/quarterto/Blofeld"
+  },
+  "bin": {
+    "blofeld": "blofeld.sh"
+  },
+  "keywords": [
+    "s3",
+    "aws",
+    "serve",
+    "sync",
+    "website"
+  ],
+  "author": "Matt Brennan <mwrbrennan@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quarterto/Blofeld/issues"
+  },
+  "homepage": "https://github.com/quarterto/Blofeld"
+}
