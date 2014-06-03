@@ -32,11 +32,13 @@ By default, Blofeld sets the expiry to one year. You probably want say HTML file
 blofeld -t my-awesome-website -f dist -s "dist/index.html dist/faq.html"
 ```
 
-And now they have five-minute expiry. Ok, so S3 doesn't support dynamic GZIP, and maybe you'd like to compress your Javascript files. Add them to the `-g` option (NB Blofeld doesn't gzip things himself yet):
+And now they have five-minute expiry. Ok, so S3 doesn't support dynamic GZIP, and maybe you'd like to compress your Javascript files. Add them to the `-g` option:
 
 ```sh
 blofeld -t my-awesome-website -f dist -g "dist/app.js"
 ```
+
+If you want Blofeld to gzip the files itself, add the `-G` option.
 
 More configuration coming soon.
 

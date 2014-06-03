@@ -53,12 +53,22 @@ deploy_gzip() {
 	echo "Syncing gzipped files $files to $bucket"
 
 	for f in $files; do
+		local mime=$(file --mime-type -b "$f")
+		if [[ $SELF_GZIP ]]; then
+			echo "Gzipping $f"
+			local file=$(mktemp /tmp/.blofeld-XXXXXXX)
+			gzip -9 $f -c > $file
+		else
+			local file=$f
+		fi
+
 		s3 cp \
-			"$f" \
+			"$file" \
 			"s3://$bucket/${f#$FOLDER/}" \
 			--acl public-read \
 			--cache-control "max-age=31536000" \
-			--content-encoding gzip
+			--content-encoding gzip \
+			--content-type "$mime"
 	done
 }
 
@@ -81,12 +91,13 @@ usage() {
 }
 
 cmdline() {
-	while getopts ":t:f:s:g:xh" OPTION; do
+	while getopts ":t:f:s:g:xhG" OPTION; do
 		case $OPTION in
 		x) set -x ;;
 		t) readonly TARGET_BUCKET="$OPTARG" ;;
 		f) readonly FOLDER="$OPTARG" ;;
 		g) readonly GZIP_FILES="$OPTARG" ;;
+		G) readonly SELF_GZIP=1 ;;
 		s) readonly SHORT_EXPIRY="$OPTARG" ;;
 		h) usage; exit 0 ;;
 		\?) echo "Unknown option $OPTARG" ; usage ; exit 1 ;;
