@@ -1,6 +1,6 @@
 {
   "name": "blofeld",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Setup and sync an S3 bucket for website serving",
   "main": "blofeld.sh",
   "repository": {
