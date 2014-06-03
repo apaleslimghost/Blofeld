@@ -2,10 +2,22 @@
 
 set -e
 
+get_script_path() {
+	# http://stackoverflow.com/a/179231/805227
+	pushd . > /dev/null
+	SCRIPT_PATH="${BASH_SOURCE[0]}";
+	if ([ -h "${SCRIPT_PATH}" ]) then
+		while([ -h "${SCRIPT_PATH}" ]) do cd `dirname "$SCRIPT_PATH"`; SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
+	fi
+	cd `dirname ${SCRIPT_PATH}` > /dev/null
+	SCRIPT_PATH=`pwd`;
+	popd  > /dev/null
+}
+
 readonly PROGNAME=$(basename $0)
-readonly DIR=$(dirname $(readlink $0 || echo $0))
+get_script_path
 AWS=aws
-MIME=$DIR/node_modules/.bin/mime
+MIME=$SCRIPT_PATH/node_modules/.bin/mime
 
 s3() {
 	$AWS s3 "$@"
