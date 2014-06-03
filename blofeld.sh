@@ -2,6 +2,7 @@
 
 readonly PROGNAME=$(basename $0)
 AWS=aws
+MIME=node_modules/.bin/mime
 
 s3() {
 	$AWS s3 "$@"
@@ -53,7 +54,7 @@ deploy_gzip() {
 	echo "Syncing gzipped files $files to $bucket"
 
 	for f in $files; do
-		local mime=$(file --mime-type -b "$f")
+		local mime=$($MIME "$f")
 		if [[ $SELF_GZIP ]]; then
 			echo "Gzipping $f"
 			local file=$(mktemp /tmp/.blofeld-XXXXXXX)
