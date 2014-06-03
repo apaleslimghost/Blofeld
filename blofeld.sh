@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 readonly PROGNAME=$(basename $0)
 AWS=aws
 MIME=node_modules/.bin/mime
