@@ -3,8 +3,9 @@
 set -e
 
 readonly PROGNAME=$(basename $0)
+readonly DIR=$(dirname $(readlink $0 || echo $0))
 AWS=aws
-MIME=node_modules/.bin/mime
+MIME=$DIR/node_modules/.bin/mime
 
 s3() {
 	$AWS s3 "$@"
