@@ -8,7 +8,8 @@
     "url": "git://github.com/quarterto/Blofeld"
   },
   "bin": {
-    "blofeld": "blofeld.sh"
+    "blofeld": "blofeld.sh",
+    "mime": "mime"
   },
   "keywords": [
     "s3",
