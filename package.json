@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/quarterto/Blofeld",
   "dependencies": {
-    "mime": "git://github.com/quarterto/node-mime"
+    "mime": "^1.2.11"
   }
 }
